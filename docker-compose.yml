@@ -1,0 +1,28 @@
+services:
+  gateway:
+    image: dairoot/ai-2api:latest
+    ports:
+      - "50006:8080"
+    restart: always
+    volumes:
+      - ./.data:/app/.data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    env_file:
+      - .env
+
+  cf5s:
+    image: dairoot/cf5s:latest
+    depends_on:
+      - gateway
+    environment:
+      - GATEWAY_URL=http://gateway:8080
+    env_file:
+      - .env
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 3600 --label-enable
