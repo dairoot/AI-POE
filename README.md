@@ -60,8 +60,7 @@ POST: /v1/chat/completions
 | model             | string  | 是       | 模型名称  |
 | messages          | array   | 是       | 消息内容                                                           |
 | stream            | boolean | 否       | 是否开启流式返回                                                   |
-| conversation_id   | string  | 否       | 会话 ID，用于临时聊天                                              |
-| parent_message_id | string  | 否       | 父消息 ID，用于临时聊天                                            |
+
 
 
 - 模型介绍:
@@ -91,10 +90,8 @@ curl --location "${yourUrl}/v1/chat/completions" \
 --header 'Content-Type: application/json' \
 --header "Authorization: Bearer ${Authorization}" \
 --data '{
+     "stream": true,
      "model": "grok-2",
      "messages": [{"role": "user", "content": "你好呀!"}],
-     "stream": true,
-     "conversation_id": null,
-     "parent_message_id": null
    }'
 ```
